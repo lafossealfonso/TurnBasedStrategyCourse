@@ -7,15 +7,18 @@ public class LevelGrid : MonoBehaviour
 
     public static LevelGrid Instance { get; private set; }
 
+
+
     [SerializeField] private Transform gridDebugObjectPrefab;
+
     private GridSystem gridSystem;
-    private Unit unit;
+
 
     private void Awake()
     {
         if (Instance != null)
         {
-            Debug.LogError("There's more than one Level Grid!! " + transform + "  -  " + Instance);
+            Debug.LogError("There's more than one LevelGrid! " + transform + " - " + Instance);
             Destroy(gameObject);
             return;
         }
@@ -43,12 +46,26 @@ public class LevelGrid : MonoBehaviour
         gridObject.RemoveUnit(unit);
     }
 
-    public void UnitMoveGridPosition(Unit unit, GridPosition fromGridPosition, GridPosition toGridPosition)
+    public void UnitMovedGridPosition(Unit unit, GridPosition fromGridPosition, GridPosition toGridPosition)
     {
         RemoveUnitAtGridPosition(fromGridPosition, unit);
 
         AddUnitAtGridPosition(toGridPosition, unit);
     }
 
-    public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition); //=> replaces {}. if function returns something then it does so automatically and without a return function.
+    public GridPosition GetGridPosition(Vector3 worldPosition) => gridSystem.GetGridPosition(worldPosition);
+
+    public Vector3 GetWorldPosition(GridPosition gridPosition) => gridSystem.GetWorldPosition(gridPosition);
+
+    public bool IsValidGridPosition(GridPosition gridPosition) => gridSystem.IsValidGridPosition(gridPosition);
+
+    public int GetWidth() => gridSystem.GetWidth();
+    public int GetHeight() => gridSystem.GetHeight();
+
+    public bool HasAnyUnitOnGridPosition(GridPosition gridPosition)
+    {
+        GridObject gridObject = gridSystem.GetGridObject(gridPosition);
+        return gridObject.HasAnyUnit();
+    }
+
 }
