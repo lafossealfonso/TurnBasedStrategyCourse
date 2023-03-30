@@ -56,6 +56,11 @@ public class UnitActionSystem : MonoBehaviour
             return;
         }
 
+        if (!TurnSystem.Instance.IsPlayerTurn())
+        {
+            return;
+        }
+
         HandleSelectedAction();
     }
 
@@ -108,6 +113,13 @@ public class UnitActionSystem : MonoBehaviour
                 {
                     if(unit == selectedUnit)
                     {
+                        //clicked on already selected unit
+                        return false;
+                    }
+
+                    if (unit.IsEnemy())
+                    {
+                        //clicked on an enemy
                         return false;
                     }
 
