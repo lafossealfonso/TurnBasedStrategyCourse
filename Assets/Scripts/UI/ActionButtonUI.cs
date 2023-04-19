@@ -12,6 +12,7 @@ public class ActionButtonUI : MonoBehaviour
     [SerializeField] private GameObject selectedGameObject;
     [SerializeField] private Image moveIcon;
     [SerializeField] private Image spinIcon;
+    [SerializeField] private Image shootIcon;
     
 
 
@@ -21,6 +22,7 @@ public class ActionButtonUI : MonoBehaviour
     {
         spinIcon.enabled = false;
         moveIcon.enabled = false;
+        shootIcon.enabled = false;
     }
     public void SetBaseAction(BaseAction baseAction)
     {
@@ -36,6 +38,11 @@ public class ActionButtonUI : MonoBehaviour
         else if(baseAction.GetActionName() == "Spin")
         {
             spinIcon.enabled = true;
+        }
+
+        else if(baseAction.GetActionName() == "Shoot")
+        {
+            shootIcon.enabled = true;
         }
 
         button.onClick.AddListener(() => {
